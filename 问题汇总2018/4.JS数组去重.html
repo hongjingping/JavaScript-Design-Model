@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let arr = [1,1,'','','e','e',true,'true',true,false,false,'false',undefined,'undefined',undefined,null,'null',null];
+// 1.基本的比较方法
+
+    // 方法一 --- [ES5]万能的for方法
+    function uniqueUseFor (array) {
+      var temp = []; // 一个临时数组
+      // 遍历当前数组
+      for (let i = 0, j = array.length; i < j; i++) {
+        // 判断数组内是否有这个值，没有的话就推入新数组
+        temp.indexOf(array[i]) === -1 ? temp.push(array[i]) : '';
+      }
+      return temp;
+    }
+    console.log(uniqueUseFor(arr)); // [1, "", "e", true, "true", false, "false", undefined, "undefined", null, "null"]
+
+    // 方法二 --- [ES5]内置的forEach方法
+    function uniqueUseForEach (array) {
+      // 传入值必须存在，且长度小于等于1的时候直接返回数组
+      if ( array && array.length <= 1 ) {
+        return array;
+      } else {
+        var temp = []; // 一个临时数组
+        // 遍历当前数组
+        array.forEach((value, index) => {
+          temp.indexOf(value) == -1 ? temp.push(value) : '';
+        });
+        return temp;
+      }
+    }
+    console.log(uniqueUseForEach(arr)); // [1, "", "e", true, "true", false, "false", undefined, "undefined", null, "null"]
+
+    // 方法三 --- ES6 内置for-of方法
+    function uniqueForOf (array) {
+      const temp = [];
+      if ( array && array.length <= 1) {
+        return array;
+      } else {
+        // 遍历当前数组
+        for (let x of array) {
+          temp.indexOf(x) === -1 ? temp.push(x) : '';
+        }
+      }
+      return temp;
+    }
+    console.log(uniqueForOf(arr)); // [1, "", "e", true, "true", false, "false", undefined, "undefined", null, "null"]
+    
+// 2.进阶版- 包含NaN,undefined,null
+    // 方法一
+    let array = [1,1,'true',true,true,5,'F',false, undefined, null,null,undefined, NaN, 0, 1, 'a', 'a', NaN,'NaN'];
+    // NaN有两种通用判定方法和数组中一种判定方法
+      // 一个是绝对不全等于(===)自身
+      // 一个是ES6的isNaN()
+      // 数组原型链上的Array.prototype.includes()
+    // ES5: 不等特性，需要借助占位符
+    function uniqueUseNotAllEqual (array) {
+      var temp = [],
+          mark = true; // 标识符
+      // 遍历当前数组
+      for (let i = 0, l = array.length; i < l; i++ ) {
+        // 标识符的作用是用来判断是否存在NaN,第一次找到保留到新数组中
+        // 然后标识位置改为false是为了再次找到的时候不推入数组
+        if (array[i] !== array[i]) {
+          // 这里的不等特性，也可以用isNaN判断
+          mark && temp.indexOf(array[i]) == -1 ? temp.push(array[i]) : '';
+          mark = false;
+        } else {
+          temp.indexOf(array[i]) == -1 ? temp.push(array[i]) : '';
+        }
+      }
+      return temp;
+    }
+    console.log(uniqueUseNotAllEqual(arr)); // [1, "", "e", true, "true", false, "false", undefined, "undefined", null, "null"]
+
+    // 方法二 --- ES6内置的Array.prototype.includes()
+    function uniqueComparseUseIncludes (array) {
+      // 传入值必须存在，且长度小于等于1的时候直接返回数组
+      if ( array && array.length <= 1) {
+        return array;
+      } else {
+        let temp = []; // 临时数组
+        // 遍历当前数组
+        for (let x of array) {
+          // includes()方法用来判断当前数组是否包含某个指定的值，如果，是则返回true，否则返回false
+          temp.includes(x) ? '' : temp.push(x);
+        }
+        return temp;
+      }
+    }
+    console.log(uniqueComparseUseIncludes(arr)) // [1, "", "e", true, "true", false, "false", undefined, "undefined", null, "null"]
+
+    // 方法三 --- Array.form 或者 拓展运算符 [...]结合Set方法
+      // Set的值具有唯一性，内部会自动 === 比较，是可迭代对象，有点特殊的是NaN不认识全等，在Set里面认为是相等的，所以只有一个
+      // Array.from 和 ...可以把类似数组这类可迭代的对象转为一个标准的数组
+      // 1.Array.form() + Set()
+      console.log(Array.from(new Set(arr))) // [1, "", "e", true, "true", false, "false", undefined, "undefined", null, "null"]
+
+      // 2. ... + Set()
+      console.log([...new Set(arr)]); // [1, "", "e", true, "true", false, "false", undefined, "undefined", null, "null"]
+// 3.高阶版---包含{}, NaN, undefined, null
+    // 1.{}有残缺性的比较可以写成JSON.stringify({}) == '{}'
+    // 2.借助for in 结合原型链的toString来判断
+    // 3.[ES5] for in + call + for
+    function uniqueUseForIn(array) {
+      let temp = [],
+          emptyObjectMark = true; //标识符
+          NaNObjectMark = true; // 标识符
+      // 判断空对象
+      function isEmptyObject (object) {
+        if (Object.prototype.toString.call(object) === '[object Object]') {
+          for (let i in object) {
+            // 存在属性和方法，则不是空对象
+            return false;
+          }
+          return true;
+        } else {
+          return false;
+        }
+      }
+      // 传入值必须存在，且长度小于等于1的时候直接返回数组
+      if (array && array.length <= 1) {
+        return array;
+      } else {
+        // 遍历当前数组
+        for (let i = 0, l = array.length; i < l; i++) {
+          if (isEmptyObject(array[i])) {
+            emptyObjectMark && temp.indexOf(array[i]) == -1 ? temp.push(array[i]) : '';
+            emptyObjectMark = false;
+          } else if ( array[i] != array[i]) {
+            NaNObjectMark && temp.indexOf(array[i]) == -1 ? temp.push(array[i]) : '';
+            NaNObjectMark = false;
+          } else {
+            temp.indexOf(array[i]) == -1 ? temp.push(array[i]) : '';
+          }
+          return temp;
+        }
+      }
+    }
+    console.log(uniqueUseForIn(arr))
+  </script>
+</body>
+</html>

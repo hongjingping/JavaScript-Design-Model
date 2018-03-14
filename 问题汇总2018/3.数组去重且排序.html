@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // new Set() 具有唯一性
+    // ...结构，可以把可迭代的转为数组
+    // sort里面传入两个值比较, 返回-1和1是因为1代表这个数大排后, -1代表小，0表示相等
+     let arr = ['2018-03-05', '2013-06-12','2019-03-12','2018-03-05','2014-02-22'];
+     let newArr = [...new Set(arr)].sort(function (a, b) {
+      return a < b ? -1 : 1;
+     });
+     console.log(newArr); // ["2013-06-12", "2014-02-22", "2018-03-05", "2019-03-12"]
+  </script>
+</body>
+</html>
