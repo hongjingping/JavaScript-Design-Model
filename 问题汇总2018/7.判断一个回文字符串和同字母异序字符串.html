@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 普通版
+    // 回文判断abcba
+    let isPalindromes = function (params) {
+      params = params.toString().toLowerCase();
+      return params === params.split('').reverse().join('');
+    }
+
+    // 同字母异序判断，如'abcefd'和'dceabf'
+    let isAnagram = function (str1, str2) {
+      str1 = str1.toString().toLowerCase();
+      str2 = str2.toString().toLowerCase();
+      return str1.split('').sort().join('') === str2.split('').sort().join('')
+    }
+  </script>
+</body>
+</html>

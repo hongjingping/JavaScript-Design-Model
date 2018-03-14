@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let arr = [1, 10, 11, -1,'-5',12, 13, 14, 15, 2, 3, 4, 7, 8, 9];
+    function MaxMinPlus (array) {
+      return Array.isArray(array) ? Math.max.apply(Math, array) - Math.min.apply(Math, array) : console.log('传入的值不是数组');
+    }
+    console.log(MaxMinPlus(arr));
+  </script>
+</body>
+</html>

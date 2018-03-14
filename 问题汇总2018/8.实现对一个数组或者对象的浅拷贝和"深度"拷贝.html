@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 浅拷贝: 把属于源对象的值都复制一遍到新的对象，不会避开两者独立的内存区域
+    // 深拷贝: 则是完全两个独立的内存区域，互不干扰
+    // 1.浅拷贝-ES5
+    function shallowClone (sourceObj) {
+      // 先判断传入的值是否是对象类型
+      if (!sourceObj || typeof sourceObj !== 'object') {
+        console.log('你传入的不是对象');
+      }
+      // 判断传入的sourceObj的类型，然后给与对应的赋值
+      let sourceObj = sourceObj.constructor === Array ? [] : {};
+      // 遍历所有的key
+      for (let keys in sourceObj) {
+        // --复制过来
+        sourceObj[keys] = sourceObj[keys];
+      }
+    }
+    // ES6可以用 object.assign(targeObj, source1, source2, source3)来实现对象的浅拷贝
+
+    // 2.深拷贝
+    // 就是把需要赋值的类型转为基本类型(字符串这些)而非引用类型来实现
+    // JSON对象中的stringify可以把一个JS对象序列化为一个JSON字符串，parse可以把JSON字符串反序列化为一个js对象
+    let deepClone = function (sourceObj) {
+      if (!sourceObj || typeof sourceObj !== 'object') {
+        console.log('你传入的不是对象');
+        return ;
+      }
+      // 转->解析->返回一步到位
+      return window.JSON
+        ? JSON.parse(JSON.stringify(sourceObj))
+        : console.log('你的浏览器不支持JSON api');
+    }
+  </script>
+</body>
+</html>
