@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let add = (function () {
+      // 声明一个变量，由于下面return，所以变量只会声明一次
+      let count = 0;
+      return function () {
+        return console.log(count++);
+      }
+    })();
+    add();
+    add();
+    add();
+  </script>
+</body>
+</html>
