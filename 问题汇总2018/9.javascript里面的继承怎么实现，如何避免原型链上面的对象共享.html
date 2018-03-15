@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // ES5:寄生组合式继承，通过借用构造函数来继承属性和原型链来实现子继承父
+    function parentClass (name) {
+      this.name = name;
+    }
+    parentClass.prototype.sayHello = function () {
+      console.log('I am parent!' + this.name);
+    }
+    function SubClass (name, age) {
+      // 若是多个参数，可以用apply结合...结构
+      parentClass.call(this, name);
+      this.age = age;
+    }
+    SubClass.prototype = Object.create(parentClass.prototype);
+    SubClass.prototype.constructor = SubClass;
+    SubClass.prototype.sayChildHello = function (name) {
+      console.log('I am Child' + this.name);
+    }
+    let textA = new SubClass('wikiHong', 18);
+
+    // Object.create()的polyfill
+    /*
+      function pureObject (o) {
+        // 定义一个临时构造函数
+        function F () {};
+        // 将这个临时构造函数的原型指向了传入进来的对象
+        F.prototype = obj;
+        // 返回这个构造函数的一个实例，该实例拥有obj的属性和方法
+        // 因为该实例的原型是obj对象
+        return new F();
+      }
+    */
+    console.log(textA)
+
+
+    // ES6
+    class ParentClass {
+      constructor (name) {
+        this.name = name;
+      }
+      sayHello () {
+        console.log('I am parent!' + this.name);
+      }
+    }
+
+    class SubClass extends ParentClass {
+      constructor (name) {
+        super(name);
+      }
+      sayChildHello () {
+        console.log('I am child' + this.anem);
+      }
+      // 重新声明父类同名方法会被覆写E，ES5的话就是直接操作自己的原型链上
+      sayHello () {
+        console.log('override parent method! I am sayHello method')
+      }
+    }
+    let testB = new SubClass('wiki');
+    console.log(testB);
+  </script>
+</body>
+</html>
