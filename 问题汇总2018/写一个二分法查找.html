@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 二分法和快排的思路差不多，对半比较
+    function binSearch (target, arr, start, end) {
+      var start = start || 0; // 允许从什么位置开始，下标
+      var end = end || arr.length-1; // 什么位置结束，下标
+
+      var mid = parseInt(start + (end - start)/2); // 中位下标
+      if (target == arr[mid]) {
+        return mid; // 直接返回下标
+      } else if (target > arr[mid]) {
+        // 目标值若是大于中位值，则下标往前走一步
+        return binSearch(target, arr, mid+1, end)
+      } else {
+        // 若是目标值小于中位值，则下标往后推一下
+        return binSearch(target, arr, start, mid-1)
+      }
+      return - 1;
+    }
+
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>几个短而让我印象深刻的题</title>
+</head>
+<body>
+  <script>
+    if (!("a" in window)) {
+      var a = 10;
+    }
+    console.log(a); // undefined
+    
+    // var a;
+    // if (!("a" in window)) {
+    //   a = 10;
+    // }
+
+    // 2.变种题
+    (function () {
+      var x = c = b = {a : 1} 
+    })();
+    // console.log(x.a); // x is not defined
+    console.log(c,b); // {a : 1} {a : 1} 
+
+    // 3.
+    var count = 0;
+    console.log(typeof count == "number"); // true
+    console.log(!!typeof count == "number"); // false
+    // typeof count 就是字符串"number"
+    // !!是转为布尔值(三目运算符的变种)，非空字符串的布尔值为true
+
+    // 4.
+    (function () {
+      var a = b = 3;
+    })();
+    console.log(typeof a === "undefined"); // true
+    console.log(typeof b === "undefined"); // false
+    // 这里涉及到立即执行和闭包的问题，还有变量提升，运算符的执行方向自左往右
+    (function () {
+      var a; // 局部变量，外部无法访问
+      b = 3; // 全局变量
+      a = b; 
+    })();
+    console.log(typeof b === 'number' && b === 3); // true
+
+    // 5.
+    function foo (something) {
+      this.a = something;
+    };
+    var obj1 = {
+      foo: foo
+    };
+    var obj2 = {};
+    obj1.foo(2);
+    console.log(obj1.a); // 2,此时this的上下文还是在obj1内，若是obj1.foo 先保存当做引用再执行传参，则上下文是window
+
+    obj1.foo.call(obj2, 3); // 用call强行改变上下文为obj2内
+    console.log(obj2.a); // 3 
+
+    var bar = new obj1.foo(4); // 产生一个新的实例
+    console.log(obj1.a); // 2
+    console.log(bar.a); // 4 new的绑定比隐试和显试绑定优先级更高
+
+    // 6.
+    function fn() {
+      alert(i);
+      var i = 300;
+      alert(i);
+    }
+    fn(); // undefined / 300 
+    alert(i); // undefined
+    var i;
+    alert(i); // undefined
+
+    var i = 300;
+    alert(i); // 300
+
+    // 7.
+    var obj1 = {
+      name: 'obj1',
+      fn: function () {
+        console.log(this.name);
+      }
+    };
+    var obj2 = {name: 'obj2'};
+    var obj3 = {name: 'obj3'};
+    // 此题设计到this的指向问题
+    obj1.fn(); // obj1
+
+    var newFn = obj1.fn;
+    newFn(); // undefined, this指向window
+
+    newFn.call(obj2); // obj2 this指向obj2
+
+    obj3.fn = newFn;
+    obj3.fn(); // obj3
+
+
+  // 8.
+  function Parent() {
+    this.a = 1;
+    this.b = [1, 2, this.a];
+    this.c = {demo:5};
+    this.show = function () {
+      console.log(this.a + '' + this.c.demo + '' + this.b);
+    }
+  }
+  function Child () {
+    this.a = 2;
+    this.change = function () {
+      this.b.push(this.a);
+      this.a = this.b.length;
+      this.c.demo = this.a++;
+    }
+  }
+  Child.prototype = new Parent();
+  var parent = new Parent();
+  var child1 = new Child();
+  var child2 = new Child();
+
+  child1.a = 11;
+  child2.a = 12;
+
+  parent.show();
+
+  child1.show();
+  child2.show();
+
+  child1.change();
+  child2.change();
+
+  parent.show();
+
+  child1.show();
+  child2.show();
+  </script>
+</body>
+</html>

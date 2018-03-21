@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body style="text-align: center">
+  <h3>2018黄山毛峰(高山云雾茶)预定中...</h3>
+  <p>自产自销</p>
+  <p>手工采摘，手工炒制(碳火+铁锅)</p>
+  <p>推荐适合你的原生态绿茶</p>
+  <p>简装，礼盒装任意选择</p>
+  <p>下面是小姐姐的微信，加微信了解详情哦~</p>
+  <h6>推荐朋友加微信，备注是谁推荐的，然后找小姐姐要红包~</h6>
+  <div style="width: 100%; height: 100%;">
+    <img  src="./img/wechat.png" style="width: 100px; height: 100px; display: block; margin:0 auto;" alt="">
+  </div>
+  <script>
+    var test='abc345efgabcab';
+    // 1. 去掉字符串中的 a,b,c 字符 ,形成结果'345efg';
+    let test1 = test.replace(/[abc]/g, '');
+    console.log(test1); // 345efg
+
+    // 2.将字符串的数字用括号括起来, 形成结果: abc[3][4][5]efg....'
+    let test2 = test.replace(/\d/g, '[$&]'); // // 若是有分组则按照$1, $2, $3的形式进行引用，而 $& 则表示的是整个正则表达式匹配的内容。
+    console.log(test2); // abc[3][4][5]efgabcab
+
+    // 3. 将字符串中的每个数字的值分别乘以2,输出:'abc6810....'
+    let test3 = test.split('').map(function (item) {
+      return /^\d$/.test(item) ? item * 2 : item;
+    }).join('');
+    console.log(test3); // abc6810efgabcab
+
+  </script>
+</body>
+</html>
