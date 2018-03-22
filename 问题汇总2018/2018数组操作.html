@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>数组操作</title>
+</head>
+<body>
+  <script>
+    // 数组去重的3种方法
+    let array = [2, '2', 2, '2']
+    // 1.Array.prototype.filter()  -- es5
+    let unique = (array) => {
+      let obj = {}
+      return array.filter((item, index) => {
+        let fullItem = (typeof item + item)
+        return obj.hasOwnProperty(fullItem) ? false : (obj[fullItem] = true)
+      })
+    }
+    console.log(unique(array)) // [2, "2"]
+
+    // 2.Map类型 -- es6
+    let arr2 = ['1', 1, '4', 4]
+    let unique2 = (arr2) => {
+      let m = new Map()
+      return arr2.filter((item) => {
+        !m.has(item) && m.set(item, 1)
+      })
+    }
+    console.log(unique2(arr2))
+
+    // 3.Set类型 -- es7，Set:即每个元素只能出现一次，即每个元素都是唯一的。
+    let arr3 = ['3', 3, '4', '6', 6, 4]
+    // es6 使用Set特性(Set元素只会出现一次，即元素是唯一)
+    // (...)扩展语句，简单来说就是把数组参数转换为多个对象参数
+    let unique3 = (arr3) => [...new Set(arr3)]
+    console.log([...new Set(arr3)])
+
+    // 1.将字符串反向
+    let str = '12345';
+    let newStr = str.split('').reverse().join('');
+    console.log(newStr)
+
+    // 2.打平嵌套数组
+    let arr = [1, [2,[3],4],5];
+    // 方法一
+    function flatten ( arr ) {
+      for (let i in arr) {
+        if ( Array.isArray(arr[i])) {
+          arr.splice(i, 1, ...flatten(arr[i]))
+        }
+      }
+      return arr
+    }
+    flatten(arr);
+
+    // 方法二
+    arr.join().split(',').map(it => Number(it));
+    console.log(arr)
+
+    // 3.寻找两个有序数组最小相同元素
+    const a = [1,2,4,5,7]
+    const b = [3,4,5,6,7]
+    function findElement (a, b) {
+      let i = j = 0;
+      while ( i < a.length || j < b.length ) {
+        if (a[i] === b[j]) {
+          return a[i]
+        } else if (a[i] > b[j]) {
+          j ++
+        } else if (a[i] < b[j]) {
+          i ++
+        }
+      }
+      return null
+    }
+    console.log(findElement(a, b)); // 采用游标，更加简单易懂。
+
+    // 4. 有序二维数组寻找某元素坐标
+    const data = [
+      [1,2,3,4,5],
+      [12,34,56,78,4],
+      [32,45,67,89,06]
+    ]
+    const len = data[0].length
+    let findOffect = (e, a, b) => {
+      if ( a < b ) return null
+      const offset = (b-a)/2 + a
+      // 映射位置便宜到坐标
+      const x = offset % len
+      const y = ~~(offset/len)
+
+      if (data[y][x] === e) {
+        return [x, y]
+      } else if (e > data[y][x]) {
+        return findOffect(e, ofset+1, b)
+      } else {
+        return findOffect(e, a, offset-1)
+      }
+    }
+    findOffect(75, 0, len * data.length -1)
+  </script>
+</body>
+</html>
