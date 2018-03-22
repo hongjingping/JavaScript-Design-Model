@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 1.构造函数继承
+    function Parent0 () {
+      this.name = 'parent0',
+      this.colors = ['red', 'green', 'blue']
+    }
+    Parent0.prototype.sex = '女'
+    Parent0.prototype.say = () => {
+      console.log('hello world')
+    }
+    function Child0 () {
+      Parent0.call(this); // 或者apply
+      this.type = 'child0';
+    }
+    console.log(new Child0().name); // parent0
+    console.log(new Child0().colors); // ['red', 'green', 'blue']
+    console.log(new Child0().sex); // undefined
+    // new Child0().say(); // say is not a function
+
+    // 2. 原型链继承
+    function Parent1 () {
+      this.name = "parent1";
+      this.colors = ["red", "blue", "yellow"]
+    }
+    function Child1 () {
+      this.name = "child1"
+    }
+    Child1.prototype = new Parent1();
+    Parent1.prototype.sex = "女";
+    Parent1.prototype.say = () => {
+      console.log("hello world");
+    }
+    console.log(new Child1().sex); // 女
+    new Child1().say(); // hello world
+    let s1 = new Child1();
+    s1.colors.push("black");
+    let s2 = new Child1();
+    console.log(s1.colors); // ["red", "blue", "yellow", "black"]
+    console.log(s2.colors); // ["red", "blue", "yellow", "black"]
+    // s1和s2一样的，是因为原型链上的原型对象是公用的
+
+    // 3.组合式继承： 借用构造函数和原型链继承的优点，使得实例对象被隔离
+    function Parent2 () {
+      this.name = "parent2";
+      this.colors = ['red', 'green', 'pink'];
+    }
+    function Child2 () {
+      Parent2.call(this);
+      this.type = "child2";
+    }
+    Child2.prototype = new Parent2();
+    let o1 = new Child2();
+    o1.colors.push("white");
+    let o2 = new Child2();
+
+    console.log(o1.colors); // ["red", "green", "pink", "white"]
+    console.log(o2.colors); // ["red", "green", "pink"]
+    // 父类构造函数被执行了两次，Child2.prototype = new Child2()
+
+    // 优化1--直接把父类的原型对象赋给子类的原型对象
+    function Parent3 () {
+      this.name = "parent3";
+      this.colors = ['red','green','pink'];
+    }
+    Parent3.prototype.sex = "男";
+    Parent3.prototype.say = function () {console.log('hello world')}
+
+    function Child3 () {
+      Parent3.call(this);
+      this.type = "Child3";
+    }
+    Child3.prototype = Parent3.prototype;
+    let h1 = new Child3();
+    let h2 = new Child3();
+    console.log(h1, h2);
+
+    console.log(h1 instanceof Child3);
+    console.log(h1 instanceof Parent3);
+    // 我们无法区分实例对象s1到底是由Child3直接实例化的还是Parent3直接实例化的。用instanceof关键字来判断是否是某个对象的实例就基本无效了。
+    console.log(h1.constructor.name); // Parent3
+    // s1的构造函数居然是Parent3，显然不是我们想要的
+
+    // 优化2
+    function Parent4 () {
+      thsi.name = "parent4";
+      this.colors = ['red', 'pink', 'green', 'white'];
+    }
+    Parent4.prototype.sex = "男"
+    Parent4.prototype.say = () => {
+      console.log("hello world");
+    }
+    let children4 = () => {
+      Parent4.call(this);
+      this.type = 'child4';
+    }
+    children4.prototype = Object.create(Parent4.prototype);
+    children4.prototype.constructor = children4;
+    // Object.create是一种创建对象的方式，它会创建一个中间对象
+    let p = {name: 'P'}
+    let obj = Object.create(p);
+    Object.create({name: 'p'})
+    // 通过这种方式创建对象，新创建的对象obj的原型就是p，同时obj也拥有了属性name，这个新创建的中间对象的原型对象就是它的参数。
+
+    // ES6
+    class Parent {}
+    class child extends Parent {
+      constructor (x, y, colors) {
+        super(x, y); // 调用父类的constructor(x, y)
+      }
+      toString() {
+        return this.colors + ' ' + super.toString(); //调用父类的toString
+      }
+    }
+    // 上面的代码中，constructor和toString方法中都出现了super关键字，在这里表示父类的构造函数，用来新建父类的this对象
+
+    // 子类必须在constructor方法中调用super方法，否则新建实例时候会报错，如果子类没有定义constructor方法，这个方式会被默认添加。
+
+    // ES5的继承，实质是先创造子类的实例对象this，然后将父类的方法添加到this上面(Parent.apply(this)).
+    // ES6的继承，实质是先创造父类的实例对象this(所以必须先调用super方法)，然后在用子类的构造函数修改this
+  </script>
+</body>
+</html>
