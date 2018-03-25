@@ -13,6 +13,23 @@
             2. 方法2： `(Math.random() * 255).toFixed(0)`
             3. 方法3： `parseInt((Math.random() * 255))`
         2. 一个数组中 par中存放了多个人员的信息,每个人员的信息由 name 和 age 构成({name:'张三',age:15}).请用 JS 实现年龄从小到大的排序;
+          ```
+          <script>
+            var arr = [
+              {name: 'Amy', age: 18},
+              {name: 'Wiki', age: 16},
+              {name: 'Jake', age: 20}
+            ]
+            function conpare(property) {
+              return function (a, b) {
+                let v1 = a[property];
+                let v2 = b[property];
+                return v1-v2;
+              }
+            }
+            console.log(arr.sort(conpare('age')))
+          </script>
+          ```
         3. vue是如何实现数据实时更新？(比如在input中输入一个数，页面中立马就变化)？
             1. vue采用数据劫持结合发布者-订阅者模式的方式，通过`Object.defineProperty()`来劫持各个属性的setter，getter，在数据变动时发布消息给订阅者，触发相应的监听回调。
             2. 具体步骤:
@@ -27,6 +44,7 @@
         5. 常用的数组api，字符串api
         6. webpack中loader的作用？
         7. require.js和sea.js的区别？他们是如何设置模块？如何使用？(说具体点)
+            1. 
         8. H5新增了那些头部的meta标签？
         9. 跨域用jsonp，如何操作的？后端返回的是什么？
         10. es6中解构赋值，表述一下？rest参数？
@@ -59,3 +77,4 @@
         2. localStroge不手动清除的话是不会清楚的，如何做到定期清除一次缓存？
         3. forEach和Map有什么区别？
         4. 一个数组中 par中存放了多个人员的信息,每个人员的信息由 name 和 age 构成({name:'张三',age:15}).请用 JS 实现年龄从小到大的排序;
+        5. 做过微信的页面，关于微信授权等，是否自己能写出来？(如何封装？)

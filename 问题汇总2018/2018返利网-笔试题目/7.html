@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 方法一 -- 获取字符串字节长度
+    let glen = (val) => {
+      let len = 0;
+      for (let i = 0; i < val.length; i++) {
+        if (val.charCodeAt(i) > 127 || val.charCodeAt(i) == 94) {
+          len += 2;
+        } else {
+          len ++;
+        }
+      }
+      return len;
+    }
+    console.log('字节长度:' + glen('1哈哈哈2as'))
+
+    // 方法2
+    let getLen = (val) => {
+      let len = 0;
+      for (let i = 0; i < val.length; i++) {
+        let c = val.charCodeAt(i);
+        // 单字节加1
+        if ((c >= 0x0001 && c <= 0x007e) || (0xff60 <= c && c < 0xff9f)) {
+          len ++;
+        } else {
+          len += 2;
+        }
+      }
+      return len;
+    }
+    console.log('字节长度:' + getLen('1哈哈哈2as'))
+
+
+    // 写一个方法，获取一个字符串字节的长度(英文占1个字符，汉字占2个字符)
+    let getByteLen = (val, num) => {
+      let len = 0;
+      for (let i = 0; i < val.length; i++) {
+        if (val[i].match(/[^\x00-\xff]/ig) != null) {//全角
+          len += 2;
+        } else {
+          len += 1;
+        }
+      };
+      if (len > num) {
+        newStr = val.substring(0, num) + "...";
+      }
+      return newStr;
+    }
+    let str = '1哈哈哈2as';
+    console.log('字符串长度:' + str.length)
+    console.log('字节的长度:' + getByteLen(str, 2));
+  </script>
+</body>
+</html>

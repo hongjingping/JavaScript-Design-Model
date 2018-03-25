@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var arr = [
+      {name: 'Amy', age: 18},
+      {name: 'Wiki', age: 16},
+      {name: 'Jake', age: 20}
+    ]
+    function conpare(property) {
+      return function (a, b) {
+        let v1 = a[property];
+        let v2 = b[property];
+        return v1-v2;
+      }
+    }
+    console.log(arr.sort(conpare('age')))
+  </script>
+</body>
+</html>

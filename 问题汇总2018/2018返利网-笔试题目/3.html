@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  ul li {
+    list-style: none;
+  }
+  .container {
+    display: flex;
+  }
+  .flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .logo {
+    width: 100px;
+  }
+  .img {
+    display: block;
+    width: 10px;
+    height: 10px;
+    background: pink;
+  }
+  .info {
+    flex: 1;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .shop {
+    width: 100px;
+  }
+</style>
+<body>
+    <div class="container">
+      <div class="logo flex"><img class="img" src="./logo.png" alt=""></div>
+      <ul class="info flex">
+        <li>艺龙旅行</li>
+        <li>订酒店.用艺龙</li>
+        <li>最高返3.5%</li>
+      </ul>
+      <div class="shop flex"><span>去购物</span></div>
+    </div>
+</body>
+</html>

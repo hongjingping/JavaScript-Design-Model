@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 编写一个方法，输入两个数字，输出两个数字的最大公约数，如16，4输出4。
+    // 指两个或多个整数共有约数中最大的一个。
+
+    // 0. 从2个数中较小的一个数开始，每次减少1，如果减少1后能被2个数整除，当前数是最大公约数，如果不能则继续减少1，直到1为止。
+    let f = (n1, n2) => {
+      for (i = Math.min(n1, n2); i > 0; i--) {
+        if ( n1 % i == 0 && n2 % i == 0) {
+          return i;
+        }
+      }
+    }
+    console.log(f(16, 4)); // 4
+
+    // 1.辗转相除法
+    let lcm = (m, n) => {
+      let u =+ m, v =+n, t=v;
+      while (v != 0) {
+        t = u % v;
+        u = v;
+        v = t;
+      }
+      return u;
+    }
+    console.log(lcm(16,4)); // 4
+
+    // 2.
+    let gys = (m, n) => {
+      if (n == 0) {
+        return m;
+      }
+      let r = parseInt(m % n);
+      return gys(n, r);
+    }
+    console.log(gys(16, 4)); // 4
+
+    // 编写一个方法，输入两个数字，输出两个数字的最小公倍数。
+    // 从2个数中较大的一个开始，每次加1，得到的数如果能整除2个数，那么当前得到的数就是最小公倍数，否则继续加1，直到得出最小公倍数为止
+    let gbs = (m, n) => {
+      for ( let i = Math.max(m, n); i > 0; i++) {
+        if ( i % m == 0 && i % n == 0 ) {
+          return i;
+        }
+      }
+    }
+    console.log(gbs(16, 4)); // 16
+
+    // js中str的方法
+    let str = 'i am a web developer'.split('').reverse().join(''); 
+    console.log('str' + str); // repoleved bew a ma i
+
+    // 写出如下正则：字符串首字符是字母，后面可以是字母、数字、下划线。总长度是3-15
+    let s = /^[a-zA-Z]\w{2,14}$/;
+    console.log(s.test('a12344sdfs_')); // true
+    //  /是转义 ^是开头 [a-zA-Z]是字母出现一次 \w是任意字符 {2，14}是长度 $是结束
+    
+  </script>
+</body>
+</html>

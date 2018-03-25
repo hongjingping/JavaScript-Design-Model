@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<style>
+  .current {
+    color: red;
+  }
+</style>
+<body>
+  <div id="j-box">
+    <ul>
+      <li>
+        <ul>
+          <!-- 循环10万次 -->
+          <li><a href="#" class="j-link">1</a></li>
+          <li><a href="#" class="j-link">2</a></li>
+          <li><a href="#" class="j-link">3</a></li>
+          <li><a href="#" class="j-link">4</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <script>
+    // 给上面HTML代码中10万个<a>链接绑定一个点击事件，点击时给<a>的上一级<li>增加一个名为current的class，同级其他<li>移除这个class(不能改动html，考虑用最优效率实现)
+    $('#j-box').on('click', '.j-link', function (e) {
+      $(this).parent('li').addClass('current').siblings('li').removeClass('current');
+    })
+  </script>
+
+  <script>
+    /* 
+      1. js事件委托(事件代理)，事件委托是利用事件冒泡，只指定一个事件处理程序，就可以管理某一类型的所有事件。
+          1. 现有的dom节点是有事件的
+          2. 新加的dom节点也是有事件的
+······2. 为什么要事件委托(事件代理)?
+          0. 减少消耗内存，动态事件绑定；
+          1. dom需要有事件处理程序，我们都会直接给他设事件处理程序，但是如果很多的dom都需要添加事件，如每个标签都有相同的click事件，可能我们用for循环，遍历所有的标签，然后给他们加事件，这样子会存在什么影响呢？
+          2. 在js中，添加到页面上的事件处理程序数量将直接关系到页面的整体运行功能，因为需要不断的和dom节点进行交互，访问dom的次数越多，引起浏览器重绘和重排的次数会越多，就会延长整个页面的交互就绪时间，就是性能优化的思想之一：减少dom操作的原因。
+          3. 如果要用事件委托，就会将所有的操作放到js程序里面，与dom的操作就只需要交互一次，这样子就大大的减少与dom的交互次数，提高性能。
+          4. 每个函数都是一个对象，是对象就会占用内存，对象越多，内存占用率就越大，自然性能就会差了(内存不够用)。
+      3. 事件委托(时间代理)原理
+          1. 利用冒泡原理实现的，就是事件从最深的节点开始，然后逐步向上传播事件。
+          2. 如页面上有这个一个节点树，div>ul>li>a，给最后一个a添加事件，那么这个事件就会一层一层的往外执行，执行顺序a>li>ul>div,
+          3. 有这样一个机制，那么我们给最外面的div加点击事件，那么里面的ul，li，a做点击的时候，都会冒泡到最外层的div上，所以都会触发。
+          4. 这就是事件委托，委托他们父级代为执行事件。
+          ```
+          document.getElementById('ul').addEventListener('click', function (e) {
+            // 兼容性处理
+            let e = e || window.event;
+            let target = e.target || e.srcElement;
+            // 判断是否匹配目标元素
+            if (target.nodeName.toLocaleLowerCase === 'li') {
+              // 处理事件
+            }
+          })
+          ```
+    */ 
+  </script>
+</body>
+</html>

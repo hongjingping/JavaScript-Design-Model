@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 有url，如'https://juejin.im/search?query=123',封装一个方法，传入参数名，取出参数值。(考虑用正则)
+    function getParam(name, url) {
+      if (typeof name !== 'string') return false;
+      if (!url) url = window.location.href;
+      // 当遇到name[xxx]时，对方括号做一下转义为 name\[xxx\],因为下面还需要name做正则
+      name = name.replace(/[\[\]]/g, '\\$&');
+      let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+      let results = regex.exec(url);
+      if (!results) {
+        return null;
+      }
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, ""));
+    }
+    console.log(getParam('query', 'https://juejin.im/search?query=123'));
+  </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  ul, li {
+    list-style: none;
+  }
+  .box {
+    width: 100px;
+    height: 30px;
+    border: 1px solid #000;
+    background: red url('1.png') no-repeat -50px -50px;
+    font: bold 14px/30px Microsoft YaHei;
+  }
+  .container {
+    display: flex;
+  }
+  .logo {
+    width: 100px;
+  }
+  .info {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .shop {
+    display: inline-block;
+    width: 100px;
+  }
+</style>
+<body>
+  <h1>热销排行版</h1>
+  <ul>
+    <li>1. 苏泊尔立式挤压榨汁机 799元</li>
+    <li>2. 苏泊尔立式挤压榨汁机 799元</li>
+    <li>3. 苏泊尔立式挤压榨汁机 799元</li>
+    <li>4. 苏泊尔立式挤压榨汁机 799元</li>
+    <li>5. 苏泊尔立式挤压榨汁机 799元</li>
+  </ul>
+  <!-- 
+    ul: 无序列表，没有排列限制，可以随意追加。
+        默认前面是小黑点。
+        修改前面的样式：设置list-style-type，有disc(默认实心圆)，circle(空心圆)，square(实心矩形)，none(不显示表示)
+    ol：有序列表，会按照你写的li前后一次排序。
+        默认前面是1，2，3...排序。
+        修改前面的样式: 设置list-style-type，有1(默认数字)，a(小写字母)，A(大写字母)，i(小写落马字符)，I(大写罗马字符)
+    dl：定义列表，默认是有层级的，(dt>dd)。
+        dt 父标签
+        dd 子标签，默认会空格缩进
+   -->
+
+  <!-- 
+    2.用简化的css代码实现如下描述:
+    .box是一个宽100px，高30px的方框，
+    有1px黑色实线边框，背景图为1.png不重复背景，
+    背景位置在x轴-50px，y轴-100px，
+    背景色为红色，字体为14px,
+    行高为30px的粗体雅黑字体
+  -->
+  <div class="box">我是返利网第二题</div>
+
+  <div class="container">
+    <div class="logo"><img src="./logo.png" alt=""></div>
+    <ul class="info">
+      <li>艺龙旅行</li>
+      <li>订酒店.用艺龙</li>
+      <li>最高返3.5%</li>
+    </ul>
+    <span class="shop">去购物</span>
+  </div>
+</body>
+</html>
